@@ -13,7 +13,7 @@ func check(err error) {
 	}
 }
 
-func main() {
+func solvePartOne() int {
 	content, err := os.ReadFile("/tmp/aoc/input.txt")
 	check(err)
 	times := strings.Fields(strings.Split(string(content), "\n")[0])[1:]
@@ -43,5 +43,27 @@ func main() {
 			product = product * numWaysToBeat
 		}
 	}
-	fmt.Printf("Part 1 - num ways to beat: %d\n", product)
+	return product
+}
+
+func solvePartTwo() int {
+	content, err := os.ReadFile("/tmp/aoc/input.txt")
+	check(err)
+	t, err1 := strconv.Atoi(strings.Replace(strings.ReplaceAll(strings.Split(string(content), "\n")[0], " ", ""), "Time:", "", 1))
+	check(err1)
+	bestDist, err2 := strconv.Atoi(strings.Replace(strings.ReplaceAll(strings.Split(string(content), "\n")[1], " ", ""), "Distance:", "", 1))
+	check(err2)
+	numWaysToBeat := 0
+	for x := 1; x < t; x++ {
+		dist := (t - x) * x
+		if dist > bestDist {
+			numWaysToBeat++
+		}
+	}
+	return numWaysToBeat
+}
+
+func main() {
+	fmt.Printf("Part 1 - num ways to beat: %d\n", solvePartOne())
+	fmt.Printf("Part 2 - num ways to beat: %d\n", solvePartTwo())
 }
